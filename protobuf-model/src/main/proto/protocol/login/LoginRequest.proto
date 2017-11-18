@@ -1,0 +1,14 @@
+package protocol.login;
+
+option java_package = "test.sdc.socket.model.protocol.login";
+option java_outer_classname = "LoginRequestProtos";
+
+// Login request.
+message LoginRequest {
+
+    // Login.
+    required string login = 1;
+    // Password.
+    required string password = 2 [default = ""];
+
+}

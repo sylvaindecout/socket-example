@@ -1,0 +1,22 @@
+package protocol;
+
+option java_package = "test.sdc.socket.model.protocol";
+option java_outer_classname = "MessageProtos";
+
+import "protocol/data/DataUpdate.proto";
+import "protocol/login/LoginRequest.proto";
+import "protocol/login/LoginResponse.proto";
+
+// Generic message
+message Message {
+
+    // TODO: Check out https://developers.google.com/protocol-buffers/docs/proto3#oneof
+
+    // Message reference
+    required string msgRefId = 1;
+
+    optional login.LoginRequest loginRequest = 2;
+    optional login.LoginResponse loginResponse = 3;
+    optional data.DataUpdate dataUpdate = 4;
+
+}

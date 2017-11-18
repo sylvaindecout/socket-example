@@ -1,0 +1,22 @@
+package protocol.login;
+
+option java_package = "test.sdc.socket.model.protocol.login";
+option java_outer_classname = "LoginResponseProtos";
+
+// Login response.
+message LoginResponse {
+
+    // Result.
+    required LoginResult value = 1 [default = INVALID_CREDENTIALS];
+
+    // Possible values.
+    enum LoginResult {
+        // Login succeeded.
+        SUCCESS = 0;
+        // Login failed: user is already logged.
+        ALREADY_LOGGED = 1;
+        // Login failed: invalid user credentials.
+        INVALID_CREDENTIALS = 2;
+    }
+
+}

@@ -1,0 +1,12 @@
+package protocol.data;
+
+option java_package = "test.sdc.socket.model.protocol.data";
+option java_outer_classname = "DataUpdateProtos";
+
+// Data update.
+message DataUpdate {
+
+    // Label.
+    required string label = 1;
+
+}
