@@ -26,6 +26,7 @@
         <dagger.version>1.2.5</dagger.version>
         <netty.version>4.1.17.Final</netty.version>
         <protobuf.version>2.6.1</protobuf.version> <!-- TODO: upgrade towards 3.4.0 -->
+        <metrics.version>3.1.0</metrics.version>
 
         <!-- Maven plug-in versions -->
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -99,6 +100,13 @@
                 <artifactId>dagger-compiler</artifactId>
                 <version>${dagger.version}</version>
                 <optional>true</optional>
+            </dependency>
+
+            <!-- Metrics -->
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${metrics.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

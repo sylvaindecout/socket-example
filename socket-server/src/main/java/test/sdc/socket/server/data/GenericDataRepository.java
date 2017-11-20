@@ -19,8 +19,8 @@ abstract class GenericDataRepository<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericDataRepository.class);
 
-    private final List<T> elements = new ArrayList<>();
-    private final EventBus eventBus;
+    protected final List<T> elements = new ArrayList<>();
+    protected final EventBus eventBus;
 
     /**
      * Constructor.

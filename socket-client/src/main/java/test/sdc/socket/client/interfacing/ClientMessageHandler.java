@@ -1,5 +1,7 @@
 package test.sdc.socket.client.interfacing;
 
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,15 +27,18 @@ public class ClientMessageHandler
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     private final EventBus eventBus;
+    private final Meter receivedDataUpdates;
 
     /**
      * Constructor.
      *
      * @param eventBus event bus
+     * @param metrics metric registry
      */
     @Inject
-    public ClientMessageHandler(final EventBus eventBus) {
+    public ClientMessageHandler(final EventBus eventBus, final MetricRegistry metrics) {
         this.eventBus = eventBus;
+        this.receivedDataUpdates = metrics.meter("receivedDataUpdates");
     }
 
     /**
@@ -62,10 +67,10 @@ public class ClientMessageHandler
     private void onLoginResponse(final Message msg) {
         if (msg.getLoginResponse().getValue() == LoginResponse.LoginResult.SUCCESS) {
             LOGGER.info("User login succeeded - waiting for data...");
-            this.eventBus.post(new LoginSuccessEvent());
+            this.eventBus.post(new LoginSuccessEvent(msg.getMsgRefId()));
         } else {
             LOGGER.warn("Login failed ({}) - trying again in {}", msg.getLoginResponse().getValue());
-            this.eventBus.post(new LoginFailureEvent());
+            this.eventBus.post(new LoginFailureEvent(msg.getMsgRefId()));
         }
     }
 
@@ -76,6 +81,7 @@ public class ClientMessageHandler
      */
     private void onDataUpdate(final Message msg) {
         LOGGER.info(msg.getDataUpdate().getLabel());
+        this.receivedDataUpdates.mark();
     }
 
 }

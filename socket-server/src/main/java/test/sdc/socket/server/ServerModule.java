@@ -1,5 +1,6 @@
 package test.sdc.socket.server;
 
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Charsets;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
@@ -59,14 +60,20 @@ final class ServerModule {
 
     @Provides
     @Singleton
+    MetricRegistry provideMetricRegistry() {
+        return new MetricRegistry();
+    }
+
+    @Provides
+    @Singleton
     ClientRegistry provideClientRegistry(final EventBus eventBus) {
         return new ClientRegistry(eventBus);
     }
 
     @Provides
     @Singleton
-    DataRepository provideDataRepository(final EventBus eventBus) {
-        return new DataRepository(eventBus);
+    DataRepository provideDataRepository(final EventBus eventBus, final MetricRegistry metrics) {
+        return new DataRepository(eventBus, metrics);
     }
 
     @Provides

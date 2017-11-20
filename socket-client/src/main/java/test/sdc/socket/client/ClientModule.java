@@ -1,5 +1,6 @@
 package test.sdc.socket.client;
 
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Charsets;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
@@ -79,9 +80,15 @@ final class ClientModule {
 
     @Provides
     @Singleton
+    MetricRegistry provideMetricRegistry() {
+        return new MetricRegistry();
+    }
+
+    @Provides
+    @Singleton
     LoginManager provideLoginManager(@Named("login") final String login, @Named("password") final String password,
-                                     final ClientConnection connection, final EventBus eventBus) {
-        return new LoginManager(login, password, connection, eventBus);
+                                     final ClientConnection connection, final EventBus eventBus, final MetricRegistry metrics) {
+        return new LoginManager(login, password, connection, eventBus, metrics);
     }
 
 }
