@@ -1,5 +1,6 @@
 package test.sdc.socket.server.interfacing;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public final class DataUpdateManager {
      * @param event failed login event
      */
     @Subscribe
+    @AllowConcurrentEvents
     public void onDataUpdate(final DataUpdateEvent<String> event) {
         try {
             LOGGER.trace("Data update event: {}", event);

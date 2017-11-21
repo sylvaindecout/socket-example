@@ -1,5 +1,6 @@
 package test.sdc.socket.server.session;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import io.netty.channel.Channel;
@@ -56,6 +57,7 @@ public final class ClientRegistry {
      * @param event login event
      */
     @Subscribe
+    @AllowConcurrentEvents
     public void onLogin(final LoginEvent event) {
         try {
             LOGGER.trace("Login event: {}", event);
