@@ -1,5 +1,7 @@
 package test.sdc.socket.server.session;
 
+import com.codahale.metrics.Gauge;
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -26,10 +28,13 @@ public final class ClientRegistry {
      * Constructor.
      *
      * @param eventBus event bus
+     * @param metrics metric registry
      */
     @Inject
-    public ClientRegistry(final EventBus eventBus) {
+    public ClientRegistry(final EventBus eventBus, final MetricRegistry metrics) {
         eventBus.register(this);
+        metrics.register(MetricRegistry.name(this.getClass(), "sessions", "number"),
+                (Gauge<Integer>) ClientRegistry.this.channels::size);
     }
 
     /**

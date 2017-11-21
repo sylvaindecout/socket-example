@@ -66,8 +66,8 @@ final class ServerModule {
 
     @Provides
     @Singleton
-    ClientRegistry provideClientRegistry(final EventBus eventBus) {
-        return new ClientRegistry(eventBus);
+    ClientRegistry provideClientRegistry(final EventBus eventBus, final MetricRegistry metrics) {
+        return new ClientRegistry(eventBus, metrics);
     }
 
     @Provides
